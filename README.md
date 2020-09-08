@@ -1,11 +1,11 @@
-# vue-music
+# 畅听音乐APP
 
-> 基于Vue全家桶打造的全能音乐播放器 采用了vue框架一系列技术。抓取了三大音乐大厂的音乐源，项目仅供个人学习使用，非商用用途，如果涉及版权问题，请及时告知。
+> 基于Vue全家桶打造的全能音乐播放器 采用了vue框架一系列技术。抓取了国内几大音乐大厂的音乐源，涵盖网易云音乐,酷狗音乐，qq音乐，咪咕音乐等音乐APP。项目仅供个人学习使用，非商用用途，如果涉及版权问题，请及时告知。
 ---
 
 
 ## 项目预览地址
-线上项目演示：[http://91cloud.top](http://91cloud.top)
+线上项目演示：[http://popps.top:7003](http://popps.top:7003)
 
 ## 音乐接口服务
 Github传送门： [https://github.com/xuzijia/CloudMusicApi](https://github.com/xuzijia/CloudMusicApi)
