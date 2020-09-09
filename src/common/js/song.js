@@ -1,7 +1,7 @@
 import {fetch} from 'common/js/common';
 import {config} from 'api/config';
 export default class Song {
-  constructor({id, mid, singer, name, album, dt, image, url,mv,alias}) {
+  constructor({id, mid, singer, name, album, dt, image, url,mv,alias,musicType,copyrightId}) {
     this.id = id
     this.singer = singer
     this.name = name
@@ -11,7 +11,8 @@ export default class Song {
     this.url = url
     this.mv = mv
     this.alias = alias
-
+    this.musicType=musicType
+    this.copyrightId=copyrightId
   }
 
 }
@@ -77,6 +78,22 @@ export function createSongBySinger(musicData) {
   })
 }
 
+export  function createMiguData(musicData){
+  return new Song({
+    id: musicData.id,
+    singer: musicData.singerName,
+    name: musicData.songName,
+    album: musicData.albumName,
+    image: musicData.cover,
+    url: musicData.mp3,
+    dt: undefined,
+    alias:[],
+    // url: getMusicUrl(musicData.id),
+    mv:musicData.mvId,
+    musicType: 'migu',
+    copyrightId: musicData.copyrightId
+  })
+}
 
 
 function filterSinger(singer) {

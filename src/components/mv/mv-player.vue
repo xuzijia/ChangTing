@@ -15,6 +15,8 @@
                         customEventName="customstatechangedeventname">
           </video-player>
 
+
+
           <!--mv详细信息-->
           <div class="detail">
             <h1 class="title">{{mvData.name}}
@@ -89,6 +91,7 @@
         mvData: {},
         currMvUrl: '',
         playerOptions: {
+          playbackRates: [0.75, 1.0, 1.5, 2.0],
           autoplay: false, //如果true,浏览器准备好时开始回放。
           muted: false, // 默认情况下将会消除任何音频。
           loop: false, // 导致视频一结束就重新开始。
@@ -118,14 +121,17 @@
       Scroll
     },
     created () {
+
+
+
       if (!this.$route.params.id) {
         this.back()
         return
       }
       //如果正在播放音乐 则暂停音乐播放
-      // if(this.playing){
-      //   this.setPlayingState(!this.playing)
-      // }
+      if(this.playing){
+        this.setPlayingState(!this.playing)
+      }
 
       this.mvid = this.$route.params.id
       //获取mv信息
@@ -165,10 +171,14 @@
         return numberFormatForOne(num)
       },
       getMvUrl () {
-        //获取mv中的url 默认获取480p
-        if (this.mvData.brs['480']) {
+        //获取mv中的url 默认获取1080p
+        if (this.mvData.brs['1080']) {
+          this.currMvUrl = this.mvData.brs['1080']
+        } else if(this.mvData.brs['720']) {
+          this.currMvUrl = this.mvData.brs['720']
+        } else if(this.mvData.brs['480']) {
           this.currMvUrl = this.mvData.brs['480']
-        } else {
+        } else if(this.mvData.brs['240']) {
           this.currMvUrl = this.mvData.brs['240']
         }
       },

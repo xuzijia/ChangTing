@@ -111,7 +111,7 @@
   import Lyric from 'lyric-parser'
   import Scroll from 'base/scroll/scroll'
   import {playerMixin} from 'common/js/mixin'
-  import {getLyric,getQQMusic} from 'api/song'
+  import {getLyric,getQQMusic,getMiguInfo} from 'api/song'
   import Playlist from 'components/playqueue/playlist'
 
   const transform = prefixStyle('transform')
@@ -298,10 +298,12 @@
         this.currentTime = e.target.currentTime
       },
       format(interval) {
-        interval = interval | 0
-        const minute = interval / 60 | 0
-        const second = this._pad(interval % 60)
-        return `${minute}:${second}`
+
+          interval = interval | 0
+          const minute = interval / 60 | 0
+          const second = this._pad(interval % 60)
+          return `${minute}:${second}`
+
       },
       onProgressBarChange(percent) {
         const currentTime = this.currentSong.dt * percent
@@ -315,22 +317,45 @@
         }
       },
       _getLyric() {
-        getLyric(this.currentSong.id).then((res) => {
-          if(res.code==config.apiConfig.request_ok){
-            let lyric=res.lrc.lyric
-            // if (this.currentSong.lyric !== lyric) {
-            //   return
-            // }
-            this.currentLyric = new Lyric(lyric, this.handleLyric)
-            if (this.playing) {
-              this.currentLyric.play()
+        if(this.currentSong.copyrightId!=undefined){
+          getMiguInfo(this.currentSong.copyrightId).then((res) => {
+            if(res.data){
+              let lyric=res.data.lyricLrc;
+              // if (this.currentSong.lyric !== lyric) {
+              //   return
+              // }
+              this.currentLyric = new Lyric(lyric, this.handleLyric)
+              if (this.playing) {
+                this.currentLyric.play()
+              }
             }
-          }
-        }).catch(() => {
-          this.currentLyric = null
-          this.playingLyric = ''
-          this.currentLineNum = 0
-        })
+          }).catch(() => {
+            this.currentLyric = null
+            this.playingLyric = ''
+            this.currentLineNum = 0
+          })
+
+
+
+        }else {
+          getLyric(this.currentSong.id).then((res) => {
+            if(res.code==config.apiConfig.request_ok){
+              let lyric=res.lrc.lyric
+              // if (this.currentSong.lyric !== lyric) {
+              //   return
+              // }
+              this.currentLyric = new Lyric(lyric, this.handleLyric)
+              if (this.playing) {
+                this.currentLyric.play()
+              }
+            }
+          }).catch(() => {
+            this.currentLyric = null
+            this.playingLyric = ''
+            this.currentLineNum = 0
+          })
+        }
+
       },
       handleLyric({lineNum, txt}) {
         this.currentLineNum = lineNum

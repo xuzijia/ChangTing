@@ -2,8 +2,11 @@
   <div class="song-list">
     <ul>
       <li @click="selectItem(song, index)" class="item" v-for="(song, index) in songs">
-        <div class="sort" v-show="!rank">
+        <div class="sort" v-show="!rank && song.musicType==undefined">
           <img width="18" height="18" style="border-radius: 18px" src="./cloudmusic.jpg">
+        </div>
+        <div class="sort" v-show="!rank && song.musicType=='migu'">
+          <img width="18" height="18" style="border-radius: 18px" src="./migu.png">
         </div>
         <div class="rank" v-show="rank">
           <span :class="getRankCls(index)" v-text="getRankText(index)"></span>

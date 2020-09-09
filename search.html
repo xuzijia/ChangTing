@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>畅听音乐搜索引擎</title>
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/npm/xgplayer@1.1.4/browser/index.js" charset="utf-8"></script>
+  <style>
+
+    body {
+    }
+
+    .type {
+      font-size: 17px;
+      margin-top: 10px;
+    }
+
+    .type input {
+      width: 15px;
+      height: 15px;
+    }
+
+    .search-main {
+      padding: 0px 10%;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .result {
+      padding: 0px 10%;
+    }
+
+    .pagination {
+      float: left;
+      padding-top: 30px;
+    }
+
+    .song-list {
+      padding-top: 10px;
+    }
+
+    .glyphicon {
+      cursor: pointer;
+    }
+
+    .modal-content {
+      width: 1000px;
+      margin: auto;
+    }
+
+    #video{
+      padding: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+<h1 style="text-align: center">
+  畅听音乐搜索引擎
+</h1>
+
+<div class="search-main">
+  <input type="text" class="form-control" id="url"
+         placeholder="搜索歌曲">
+  <div class="type">
+    <label class="radio-inline">
+      <input type="radio" name="musicType" value="wangyi" checked> 网易云音乐
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="musicType" value="qq"> QQ音乐
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="musicType" value="kugou"> 酷狗音乐
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="musicType" value="migu"> 咪咕音乐
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="musicType" value="baidu"> 百度音乐
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="musicType" value="baidu"> 虾米音乐
+    </label>
+  </div>
+  <button type="button" class="btn btn-default" style="margin-top: 15px">搜索</button>
+</div>
+
+<!--搜索结果-->
+
+
+<div class="result">
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h3 class="panel-title">搜索结果</h3>
+    </div>
+    <div class="panel-body">
+
+      <div class="song-list">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>编号</th>
+            <th>歌名</th>
+            <th>歌手</th>
+            <th>发行时间</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>天后</td>
+            <td>陈势安</td>
+            <td>2008-06-10</td>
+            <td>
+              <span class="glyphicon glyphicon-play"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-facetime-video" data-toggle="modal"
+                                 data-target="#myModal"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-save"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>天后</td>
+            <td>薛之谦</td>
+            <td>2008-06-10</td>
+            <td>
+              <span class="glyphicon glyphicon-play"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-facetime-video"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-save"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>天后</td>
+            <td>陈势安</td>
+            <td>2008-06-10</td>
+            <td>
+              <span class="glyphicon glyphicon-play"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-facetime-video"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-save"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>天后</td>
+            <td>薛之谦</td>
+            <td>2008-06-10</td>
+            <td>
+              <span class="glyphicon glyphicon-play"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-facetime-video"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-save"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>天后</td>
+            <td>陈势安</td>
+            <td>2008-06-10</td>
+            <td>
+              <span class="glyphicon glyphicon-play"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-facetime-video"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-save"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>天后</td>
+            <td>薛之谦</td>
+            <td>2008-06-10</td>
+            <td>
+              <span class="glyphicon glyphicon-play"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-facetime-video"></span>
+              &nbsp;&nbsp; <span class="glyphicon glyphicon-save"></span>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+
+      <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li class="disabled"><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- 模态框（Modal） -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title" id="myModalLabel">
+            歌曲MV播放
+          </h4>
+        </div>
+        <div class="modal-body">
+          <div id="video" style="margin: auto"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+          </button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+
+
+  </div>
+</div>
+
+</body>
+<script>
+  let player = new Player({
+    "id": "video",
+    "url": "http://vodkgeyttp8.vod.126.net/cloudmusic/YCJgJTAjISAkIDNmJSEwNQ==/mv/5842395/fd3aa0e6dc96f8e6d57aa60d70193430.mp4?wsSecret=3fe93534a66d6d9c7718aab0dd9d5499&wsTime=1599557767",
+    "playsinline": true,
+    "whitelist": [
+      ""
+    ],
+
+  });
+
+</script>
+
+
+</html>

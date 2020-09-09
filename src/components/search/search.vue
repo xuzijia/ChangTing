@@ -3,6 +3,17 @@
     <div class="search">
       <div class="search-box-wrapper">
         <search-box ref="searchBox" @query="onQueryChange"></search-box>
+
+        <div class="type">
+          <input type="radio" name="type" id="cloud" value="cloud" v-model="musicType" @change="searchMusicType()">
+          <label for="cloud">网易云</label> &nbsp;
+          <input type="radio" name="type" id="qq" value="qq"  v-model="musicType"  @change="searchMusicType()">
+          <label for="qq">QQ</label> &nbsp;
+          <input type="radio"  name="type" id="migu" value="migu"  v-model="musicType"  @change="searchMusicType()">
+          <label for="migu">咪咕</label> &nbsp;
+          <input type="radio" name="type"  id="kugou" value="kugou"  v-model="musicType"  @change="searchMusicType()">
+          <label for="kugou">酷狗</label> &nbsp;
+        </div>
       </div>
       <div ref="shortcutWrapper" class="shortcut-wrapper" v-show="!query">
         <scroll :refreshDelay="refreshDelay" ref="shortcut" class="shortcut" :data="shortcut">
@@ -27,6 +38,11 @@
           </div>
         </scroll>
       </div>
+
+
+
+
+
       <div class="tab" v-show="query">
         <div tag="div" class="tab-item">
           <span class="tab-link" :class="{'tab-link-active':type==1}" @click="search(1)">单曲</span>
@@ -44,7 +60,7 @@
       </div>
 
       <div class="search-result" v-show="query" ref="searchResult">
-        <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query" :type="type"></suggest>
+        <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query" :type="type" :musicType="musicType"></suggest>
       </div>
       <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空所有搜索历史" confirmBtnText="清空"></confirm>
       <router-view></router-view>
@@ -69,7 +85,8 @@
       return {
         hotKey: [],
         type:1,
-        singer:[]
+        singer:[],
+        musicType: 'cloud'
       }
     },
     computed: {
@@ -94,6 +111,11 @@
         this.type=type;
         //重新触发查询
         this.$refs.suggest.setType(type);
+        this.$refs.suggest.search();
+      },
+      searchMusicType(){
+        //重新触发查询
+        this.$refs.suggest.setMusicType(this.musicType);
         this.$refs.suggest.search();
       },
       showConfirm () {
@@ -133,6 +155,13 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
 
+  .type
+    color : $color-text-l
+    margin-top: 13px;
+    text-align : center
+    label
+      padding-left:2px
+      padding-right: 10px
   .search
     .search-box-wrapper
       margin: 20px
@@ -141,11 +170,13 @@
       top: 178px
       bottom: 0
       width: 100%
+
       .shortcut
         height: 100%
         overflow: hidden
         .hot-key
           margin: 0 20px 20px 20px
+          margin-top: 10px
           .title
             margin-bottom: 20px
             font-size: $font-size-medium
@@ -177,8 +208,11 @@
     .search-result
       position: fixed
       width: 100%
-      top: 205px
+      top: 215px
       bottom: 0
+      padding-top :10px
+
+
     .tab
       display: flex
       height: 44px

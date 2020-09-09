@@ -12,12 +12,13 @@ import {fetch} from 'common/js/common'
  * @param 搜索类型
  * @returns 搜索结果
  */
-export function search (query,type,offset,limit) {
-  const url="/search";
+export function search (query,type,musicType,offset,limit) {
+  const url="/core/search";
   //获取100个
   const data={
     keywords:query,
     type:type,
+    musicType: musicType,
     offset:offset,
     limit:limit
   };

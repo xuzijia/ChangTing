@@ -9,15 +9,15 @@
   >
     <div class="suggest-list">
       <!--<ul v-show="type==1">-->
-        <!--<li @click="selectItem(item)" class="suggest-item" v-for="item in result">-->
-          <!--<div class="icon">-->
-            <!--<i :class="getIconCls(item)"></i>-->
-          <!--</div>-->
-          <!--<div class="name">-->
-            <!--<p class="text" v-html="getDisplayName(item)"></p>-->
-          <!--</div>-->
-        <!--</li>-->
-        <!--<loading v-show="hasMore" title=""></loading>-->
+      <!--<li @click="selectItem(item)" class="suggest-item" v-for="item in result">-->
+      <!--<div class="icon">-->
+      <!--<i :class="getIconCls(item)"></i>-->
+      <!--</div>-->
+      <!--<div class="name">-->
+      <!--<p class="text" v-html="getDisplayName(item)"></p>-->
+      <!--</div>-->
+      <!--</li>-->
+      <!--<loading v-show="hasMore" title=""></loading>-->
       <!--</ul>-->
 
       <div v-show="type==1" class="song-list">
@@ -45,7 +45,7 @@
       <div v-show="!playList.length && type==1000" class="no-result-wrapper">
         <no-result title="抱歉，暂无搜索结果"></no-result>
       </div>
-  </div>
+    </div>
   </scroll>
 </template>
 
@@ -55,7 +55,7 @@
   import NoResult from 'base/no-result/no-result'
   import {search} from 'api/search'
   import {config} from 'api/config'
-  import {createSongBySinger} from 'common/js/song'
+  import {createSongBySinger,createMiguData} from 'common/js/song'
   import {mapMutations, mapActions} from 'vuex'
   import Singer from 'components/common/singer'
   import PlayList from 'components/common/playlist'
@@ -82,9 +82,13 @@
       type: {
         type: Number,
         default: 1
+      },
+      musicType: {
+        type: String,
+        default: 'cloud'
       }
     },
-    data () {
+    data() {
       return {
         page: 0,
         pullup: true,
@@ -97,7 +101,7 @@
       }
     },
     computed: {
-      getData () {
+      getData() {
         console.log(this.type)
         if (this.type == SINGER) {
           return this.singers
@@ -113,14 +117,17 @@
 
     },
     methods: {
-      refresh () {
+      refresh() {
         this.$refs.suggest.refresh()
       },
-      setType (type) {
+      setType(type) {
         this.type = type
       },
+      setMusicType(musicType) {
+        this.musicType = musicType
+      },
       //点击歌手进入歌手页
-      select (singer) {
+      select(singer) {
         this.$emit('select', singer)
         //将歌手的信息设置到vuex
         this.setSinger(singer)
@@ -129,14 +136,14 @@
           path: `/singer/${singer.id}`
         })
       },
-      selectPlayList (item) {
+      selectPlayList(item) {
         this.$emit('select', item)
         this.$router.push({
           path: `/search/playlist/${item.id}`
         })
         this.setDisc(item)
       },
-      search () {
+      search() {
         this.result = []
         this.singers = []
         this.playList = []
@@ -144,75 +151,95 @@
         this.page = 0
         this.hasMore = true
         this.$refs.suggest.scrollTo(0, 0)
-        search(this.query, this.type, this.page * perpage, perpage).then((res) => {
-          if (res.code === config.apiConfig.request_ok) {
-            //根据不同的搜索类型 解析数据
-            if (this.type == SONG) {
-              this.result = this._genResult(res.result)
-              this._checkMore(res.result)
-            } else if (this.type == SINGER) {
-              console.log(res.result.artists)
-              this.singers = res.result.artists == undefined ? [] : res.result.artists
-              if (res.result.artists == undefined) {
-                this.hasMore = false
-              } else {
-                this._checkMoreForSinger(res.result)
+        search(this.query, this.type, this.musicType, this.page * perpage, perpage).then((res) => {
+          if(this.musicType=='cloud'){
+            if (res.code === config.apiConfig.request_ok) {
+              //根据不同的搜索类型 解析数据
+              if (this.type == SONG) {
+                this.result = this._genResult(res.result)
+                this._checkMore(res.result)
+              } else if (this.type == SINGER) {
+                console.log(res.result.artists)
+                this.singers = res.result.artists == undefined ? [] : res.result.artists
+                if (res.result.artists == undefined) {
+                  this.hasMore = false
+                } else {
+                  this._checkMoreForSinger(res.result)
+                }
+              } else if (this.type == PLAYLIST) {
+                this.playList = res.result.playlists
+                this._checkMoreForPlayList(res.result)
+                console.log(this.playList)
               }
-            } else if (this.type == PLAYLIST) {
-              this.playList = res.result.playlists
-              this._checkMoreForPlayList(res.result)
-              console.log(this.playList)
+            }
+          }else if(this.musicType=='migu'){
+            if(res.success==true){
+              this.result=this.result.concat(this.getMiguResult(res.musics));
             }
           }
+
         })
       },
       //下拉加载更多
-      searchMore () {
+      searchMore() {
         if (!this.hasMore) {
           return
         }
         this.page++
-        search(this.query, this.type, this.page * perpage, perpage).then((res) => {
-          if (res.code === config.apiConfig.request_ok) {
-            //根据不同的搜索类型 解析数据
-            if (this.type == SONG) {
-              this.result = this.result.concat(this._genResult(res.result))
-              this._checkMore(res.result)
-            } else if (this.type == SINGER) {
-              this.singers = this.singers.concat(res.result.artists)
-              this._checkMoreForSinger(res.artists)
-            } else if (this.type == PLAYLIST) {
-              this.playList = this.playList.concat(res.result.playlists)
-              this._checkMoreForPlayList(res.result)
+        search(this.query, this.type, this.musicType,this.page * perpage, perpage).then((res) => {
+          if(this.musicType=='cloud'){
+            if (res.code === config.apiConfig.request_ok) {
+              //根据不同的搜索类型 解析数据
+              if (this.type == SONG) {
+                this.result = this.result.concat(this._genResult(res.result))
+                this._checkMore(res.result)
+              } else if (this.type == SINGER) {
+                this.singers = this.singers.concat(res.result.artists)
+                this._checkMoreForSinger(res.artists)
+              } else if (this.type == PLAYLIST) {
+                this.playList = this.playList.concat(res.result.playlists)
+                this._checkMoreForPlayList(res.result)
+              }
             }
-
+          } else if(this.musicType=='migu'){
+            if(res.success==true){
+               this.result=this.result.concat(this.getMiguResult(res.musics));
+            }
           }
+
         })
       },
-      listScroll () {
+      listScroll() {
         this.$emit('listScroll')
       },
-      selectItem (item) {
+      selectItem(item) {
         this.insertSong(item)
         this.$emit('select', item)
       },
-      playMv(id){
+      playMv(id) {
         this.$router.push({
-          path:`/mv/player/${id}`
+          path: `/mv/player/${id}`
         })
       },
-      getIconCls () {
+      getIconCls() {
         return 'icon-music'
       },
-      _genResult (data) {
+      _genResult(data) {
         let ret = []
         if (data.songs) {
           ret = ret.concat(this._normalizeSongs(data.songs))
         }
         return ret
       },
+      getMiguResult(data){
+        let ret=[];
+        data.forEach((musicData) =>{
+          ret.push(createMiguData(musicData));
+        })
+        return ret;
+      },
       //解析歌曲
-      _normalizeSongs (list) {
+      _normalizeSongs(list) {
         let ret = []
         list.forEach((musicData) => {
           if (musicData.id && musicData.al.id) {
@@ -221,20 +248,20 @@
         })
         return ret
       },
-      getDisplayName (item) {
+      getDisplayName(item) {
         return `${item.name}-${item.singer}`
       },
-      _checkMore (data) {
+      _checkMore(data) {
         if (data.songCount == 0 || !data.songs.length || (data.songs.length + this.page * perpage) >= data.songCount) {
           this.hasMore = false
         }
       },
-      _checkMoreForSinger (data) {
+      _checkMoreForSinger(data) {
         if (data.artistCount == 0 || !data.artists.length || (data.artists.length + this.page * perpage) >= data.artistCount) {
           this.hasMore = false
         }
       },
-      _checkMoreForPlayList (data) {
+      _checkMoreForPlayList(data) {
         if (data.playlistCount == 0 || !data.playlists.length || (data.playlists.length + this.page * perpage) >= data.playlistCount) {
           this.hasMore = false
         }
@@ -248,7 +275,7 @@
       })
     },
     watch: {
-      query (newQuery) {
+      query(newQuery) {
         this.search(newQuery)
       }
     },
@@ -271,9 +298,11 @@
   .suggest
     height: 100%
     overflow: hidden
+
     .suggest-list
       .song-list
         padding 0px 10px
+
     .no-result-wrapper
       position: absolute
       width: 100%

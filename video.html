@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
+    <meta name="referrer" content="no-referrer">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdn.jsdelivr.net/npm/xgplayer@1.1.4/browser/index.js" charset="utf-8"></script>
+
+    <title>视频流推送</title>
+    <style type="text/css">
+        body{
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<form class="form-horizontal" role="form" style="margin-top: 50px">
+    <div class="form-group">
+        <label for="url" class="col-sm-2 control-label">视频流:</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" id="url"
+                   placeholder="视频流"> <button type="button" class="btn btn-default" style="margin-top: 15px" onclick="play();">播放</button>
+        </div>
+    </div>
+</form>
+
+
+<div id="video" style="margin: auto"></div>
+
+<script>
+    var player;
+        function play(){
+            if(player!=undefined){
+                player.src=$("#url").val();
+            }else{
+                player= new Player({
+                    "id": "video",
+                    "url": $("#url").val(),
+                    "playsinline": true,
+                    "whitelist": [
+                        ""
+                    ],
+                    // "poster": "http://p1.music.126.net/T14lMrty1Rz92-yDMYKO4Q==/7762552092970870.jpg",
+                    "width": "100%",
+                    "height": "auto",
+                    "autoplay": true,
+                    "playbackRate": [
+                        0.5,
+                        1,
+                        1.5,
+                        2
+                    ],
+                    "x5-video-player-type": "h5",
+                    "x5-video-player-fullscreen": "true",
+                    "x5-video-orientation": "portraint"
+                });
+            }
+
+
+
+        }
+
+
+    // player.emit('resourceReady', [{"name":"240P","url":"http://vodkgeyttp8.vod.126.net/cloudmusic/YCJgJTAjISAkIDNmJSEwNQ==/mv/5842395/7d6c4d4e864028153245bd5561826f7a.mp4?wsSecret=6946772a92bfd0c154dac76e358eebce&wsTime=1598599859"},{"name":"480P","url":"http://vodkgeyttp8.vod.126.net/cloudmusic/YCJgJTAjISAkIDNmJSEwNQ==/mv/5842395/2ed98b63ed6cc5fe1df1ed43976bcb9d.mp4?wsSecret=6d4c1012c81418ba8cbe51b5c9804b37&wsTime=1598599859"},{"name":"720P","url":"http://vodkgeyttp8.vod.126.net/cloudmusic/YCJgJTAjISAkIDNmJSEwNQ==/mv/5842395/230825ce6b6bd37937f7b03987a2323d.mp4?wsSecret=8227d52f11ce0b7414d2da7a7b0562f9&wsTime=1598599859"}])
+</script>
+</body>
+</html>

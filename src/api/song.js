@@ -19,6 +19,17 @@ export function getLyric(id) {
 }
 
 /**
+ * 获取咪咕音乐信息
+ */
+export function getMiguInfo(id){
+  const url="/migu/getSongInfo";
+  const data={
+    id:id,
+  }
+  return fetch(url,data);
+}
+
+/**
  * 获取mv信息
  * @param id
  * @returns mv详细信息

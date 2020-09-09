@@ -10,8 +10,8 @@ import VueLazyload from 'vue-lazyload'
 import 'common/icon/iconfont.css' /*引入图标文件*/
 import {readCookie} from 'base/utils/musicUtils'
 // axios.defaults.baseURL = 'http://91cloud.top';
-// axios.defaults.baseURL = 'http://10.107.0.20:3001';
-axios.defaults.baseURL = 'http://popps.top:7003/api';
+axios.defaults.baseURL = 'http://10.107.0.20:3001';
+// axios.defaults.baseURL = 'http://popps.top:7003/api';
 //开启cookie
 axios.defaults.withCredentials=true
 

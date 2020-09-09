@@ -1,7 +1,7 @@
 <template>
   <div class="m-header">
     <div class="icon"></div>
-    <h1 class="text">到点了,网抑云le</h1>
+    <h1 class="text">畅听音乐 (ChangTing) </h1>
   </div>
 </template>
 
@@ -32,7 +32,7 @@
       vertical-align: top
       line-height: 45px
       font-size:$font-size-medium-x
-      color: $color-sub-theme
+      color: $color-theme
     .mine
       position: absolute
       top: 0
