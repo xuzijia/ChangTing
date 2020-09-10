@@ -1,7 +1,7 @@
 {
-  "name": "vue-music",
+  "name": "ChangTing",
   "version": "1.0.0",
-  "description": "全能音乐播放器",
+  "description": "畅听音乐",
   "author": "simple",
   "private": true,
   "scripts": {
@@ -28,7 +28,8 @@
     "vue-router": "^3.0.1",
     "vue-video-player": "^5.0.2",
     "vuex": "^3.0.1",
-    "weixin-js-sdk": "^1.4.0-test"
+    "weixin-js-sdk": "^1.4.0-test",
+    "xgplayer": "^2.11.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

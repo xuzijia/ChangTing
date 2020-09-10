@@ -47,11 +47,24 @@ export function getMvInfo (id) {
  * @param searchStr 歌手+歌曲进行搜索
  * @returns url
  */
-export function getQQMusic (searchStr,musicId) {
+export function getQQMusic (searchStr,musicId,musicType) {
   const url="qq/switchSource";
   const data={
     searchStr:searchStr,
-    musicId: musicId
+    musicId: musicId,
+    musicType:musicType
+  }
+  return fetch(url,data);
+}
+/**
+ * 获取酷狗播放源
+ * @param hash 歌曲hash值
+ * @returns url
+ */
+export function getKugouMusic (hash) {
+  const url="kugou/getSongDetail";
+  const data={
+    musicHash:hash,
   }
   return fetch(url,data);
 }

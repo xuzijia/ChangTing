@@ -111,7 +111,7 @@
   import Lyric from 'lyric-parser'
   import Scroll from 'base/scroll/scroll'
   import {playerMixin} from 'common/js/mixin'
-  import {getLyric,getQQMusic,getMiguInfo} from 'api/song'
+  import {getLyric,getQQMusic,getMiguInfo,getKugouMusic} from 'api/song'
   import Playlist from 'components/playqueue/playlist'
 
   const transform = prefixStyle('transform')
@@ -269,25 +269,29 @@
         this.songReady = false
       },
       ready() {
-        console.log(this.currentSong);
+
         this.songReady = true
         this.savePlayHistory(this.currentSong)
       },
       error(e) {
         var code=e.target.error.code
         //code==4 说明该歌曲没有版权
-        console.log(code);
+        console.log(code+this.currentSong.musicType);
+        console.log(this.currentSong)
         if(code==4){
           //发起请求
-          let searchStr=this.currentSong.singer+" "+this.currentSong.name;
-          getQQMusic(searchStr,this.currentSong.id).then((res)=>{
-            if(res.code==config.apiConfig.request_ok && res.url!=null){
-              this.currentSong.url=res.url;
-            }else{
-              alert("好家伙，网抑云没有这首歌的版权。");
-              this.songReady = true
-            }
-          })
+          if(this.currentSong.musicType=='cloud' || this.currentSong.musicType=='qq' || this.currentSong.url.indexOf("163")!=-1){
+            let searchStr=this.currentSong.singer+" "+this.currentSong.name;
+            getQQMusic(searchStr,this.currentSong.id,this.currentSong.musicType).then((res)=>{
+              if(res.code==config.apiConfig.request_ok && res.url!=null){
+                this.currentSong.url=res.url;
+              }else{
+                alert("暂时无版权,可以切换到其他平台看看哟")
+                this.songReady = true
+              }
+            })
+          }
+
         }else{
           alert("网络出问题了吗？");
           //code==2 没有网络
@@ -487,6 +491,29 @@
         if (newSong.id === oldSong.id) {
           return
         }
+        if(this.currentSong.musicType=='qq'){
+          //发起请求
+          let searchStr=this.currentSong.singer+" "+this.currentSong.name;
+          getQQMusic(searchStr,this.currentSong.id,this.currentSong.musicType).then((res)=>{
+            if(res.code==config.apiConfig.request_ok && res.url!=null){
+              this.currentSong.url=res.url;
+            }else{
+              alert("充钱就能变得更强,可以切换到其他平台看看哟");
+              this.songReady = true
+            }
+          })
+        }else if(this.currentSong.musicType=='kugou'){
+          getKugouMusic(this.currentSong.hash).then((res) =>{
+            if(res.url){
+              this.currentSong.url=res.url;
+            }else{
+              alert("充钱就能变得更强,可以切换到其他平台看看哟");
+              this.songReady = true
+            }
+          })
+        }
+
+
         if (this.currentLyric) {
           this.currentLyric.stop()
           this.currentTime = 0
@@ -508,7 +535,8 @@
         console.log(newPlaying)
         const audio = this.$refs.audio
         this.$nextTick(() => {
-          newPlaying ? audio.play() : audio.pause()
+          newPlaying ? audio.play()
+            : audio.pause()
         })
       },
       fullScreen(newVal) {

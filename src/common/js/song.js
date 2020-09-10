@@ -1,7 +1,7 @@
 import {fetch} from 'common/js/common';
 import {config} from 'api/config';
 export default class Song {
-  constructor({id, mid, singer, name, album, dt, image, url,mv,alias,musicType,copyrightId}) {
+  constructor({id, mid, singer, name, album, dt, image, url,mv,alias,musicType,hash,copyrightId}) {
     this.id = id
     this.singer = singer
     this.name = name
@@ -13,6 +13,7 @@ export default class Song {
     this.alias = alias
     this.musicType=musicType
     this.copyrightId=copyrightId
+    this.hash=hash
   }
 
 }
@@ -86,15 +87,49 @@ export  function createMiguData(musicData){
     album: musicData.albumName,
     image: musicData.cover,
     url: musicData.mp3,
-    dt: undefined,
+    dt: 280000,
     alias:[],
     // url: getMusicUrl(musicData.id),
     mv:musicData.mvId,
     musicType: 'migu',
+    hash: '',
     copyrightId: musicData.copyrightId
   })
 }
+export function createQQData(musicData) {
+  return new Song({
+    id: musicData.songmid,
+    singer: filterSinger(musicData.singer),
+    name: musicData.songname,
+    album: musicData.albumname,
+    image: "",
+    url: `http://www.baidu.com`,
+    dt: 0,
+    alias: [],
+    mv: "",
+    musicType: 'qq',
+    hash: '',
+    copyrightId: ''
 
+  })
+
+}
+  export function createKugouData(musicData){
+    return new Song({
+      id: musicData.audio_id,
+      singer: musicData.singername,
+      name: musicData.songname,
+      album: musicData.album_name,
+      image: "",
+      url:`http://www.google.com`,
+      dt: 0,
+      alias:[],
+      mv: "",
+      musicType: 'kugou',
+      hash: musicData.hash,
+      copyrightId: ''
+    })
+}
 
 function filterSinger(singer) {
   let ret = []
@@ -106,3 +141,4 @@ function filterSinger(singer) {
   })
   return ret.join('/')
 }
+

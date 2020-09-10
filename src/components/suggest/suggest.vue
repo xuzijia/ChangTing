@@ -55,7 +55,7 @@
   import NoResult from 'base/no-result/no-result'
   import {search} from 'api/search'
   import {config} from 'api/config'
-  import {createSongBySinger,createMiguData} from 'common/js/song'
+  import {createSongBySinger,createMiguData,createKugouData,createQQData} from 'common/js/song'
   import {mapMutations, mapActions} from 'vuex'
   import Singer from 'components/common/singer'
   import PlayList from 'components/common/playlist'
@@ -169,12 +169,20 @@
               } else if (this.type == PLAYLIST) {
                 this.playList = res.result.playlists
                 this._checkMoreForPlayList(res.result)
-                console.log(this.playList)
               }
             }
           }else if(this.musicType=='migu'){
             if(res.success==true){
               this.result=this.result.concat(this.getMiguResult(res.musics));
+            }
+          } else if(this.musicType=='qq'){
+            if(res.code==0){
+              this.result = this.result.concat(this.getqqResult(res.data))
+            }
+          }else if(this.musicType=='kugou'){
+            if(res.errcode==0){
+              this.result = this.result.concat(this.getkugouResult(res.data))
+              console.log(this.result)
             }
           }
 
@@ -204,6 +212,14 @@
           } else if(this.musicType=='migu'){
             if(res.success==true){
                this.result=this.result.concat(this.getMiguResult(res.musics));
+            }
+          }else if(this.musicType=='qq'){
+            if(res.code==0){
+              this.result = this.result.concat(this.getqqResult(res.data))
+            }
+          }else if(this.musicType=='kugou'){
+            if(res.errcode==0){
+              this.result = this.result.concat(this.getkugouResult(res.data))
             }
           }
 
@@ -236,6 +252,24 @@
         data.forEach((musicData) =>{
           ret.push(createMiguData(musicData));
         })
+        return ret;
+      },
+      getqqResult(data){
+        let ret=[];
+        if(data.song.list){
+          data.song.list.forEach((musicData) =>{
+            ret.push(createQQData(musicData));
+          })
+        }
+        return ret;
+      },
+      getkugouResult(data){
+        let ret=[];
+        if(data.info){
+          data.info.forEach((musicData) =>{
+            ret.push(createKugouData(musicData));
+          })
+        }
         return ret;
       },
       //解析歌曲
