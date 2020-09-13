@@ -47,7 +47,7 @@
         return;
       }
       this._getSingerMv(this.singer.id);
-      console.log(this.mvs)
+
     },
     methods:{
       handlePlaylist(playlist) {
@@ -67,7 +67,7 @@
                 this.load=false;
               }
               this.hasMore=res.hasMore;
-              console.log(res);
+
             }
           })
       },

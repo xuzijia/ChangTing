@@ -24,7 +24,7 @@ export function getMusicUrl(musicId){
   };
   const url="/song/player";
   fetch(url,data).then(res=>{
-    console.log(res.data[0].url);
+
     if (res.code == config.apiConfig.request_ok) {
       return res.data[0].url;
     }
@@ -102,7 +102,7 @@ export function createQQData(musicData) {
     singer: filterSinger(musicData.singer),
     name: musicData.songname,
     album: musicData.albumname,
-    image: "",
+    image: "http://y.gtimg.cn/music/photo_new/T002R300x300M000"+musicData.albummid+"_1.jpg%3Fmax_age=2592000",
     url: `http://www.baidu.com`,
     dt: 0,
     alias: [],

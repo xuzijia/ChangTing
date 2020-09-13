@@ -40,7 +40,7 @@
         getAlbumList(this.album.id).then((res) => {
           if (res.code === config.apiConfig.request_ok) {
             this.songs = this._normalizeSongs(res.songs)
-            console.log(this.songs);
+
           }
         })
       },

@@ -145,7 +145,7 @@
       _getMvInfo () {
         if (this.mvid != 0) {
           getMvInfo(this.mvid).then(res => {
-            console.log(res)
+
             if (res.code == config.apiConfig.request_ok) {
               this.mvData = res.data
               this.getMvUrl()

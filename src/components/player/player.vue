@@ -111,7 +111,7 @@
   import Lyric from 'lyric-parser'
   import Scroll from 'base/scroll/scroll'
   import {playerMixin} from 'common/js/mixin'
-  import {getLyric,getQQMusic,getMiguInfo,getKugouMusic} from 'api/song'
+  import {getLyric,getQQMusic,getMiguInfo,getKugouMusic,getQQLyric,getKugouLyric} from 'api/song'
   import Playlist from 'components/playqueue/playlist'
 
   const transform = prefixStyle('transform')
@@ -276,8 +276,8 @@
       error(e) {
         var code=e.target.error.code
         //code==4 说明该歌曲没有版权
-        console.log(code+this.currentSong.musicType);
-        console.log(this.currentSong)
+
+
         if(code==4){
           //发起请求
           if(this.currentSong.musicType=='cloud' || this.currentSong.musicType=='qq' || this.currentSong.url.indexOf("163")!=-1){
@@ -311,7 +311,7 @@
       },
       onProgressBarChange(percent) {
         const currentTime = this.currentSong.dt * percent
-        // console.log(currentTime)
+
         this.$refs.audio.currentTime = currentTime
         if (!this.playing) {
           this.togglePlaying()
@@ -321,7 +321,7 @@
         }
       },
       _getLyric() {
-        if(this.currentSong.copyrightId!=undefined){
+        if(this.currentSong.musicType=='migu'){
           getMiguInfo(this.currentSong.copyrightId).then((res) => {
             if(res.data){
               let lyric=res.data.lyricLrc;
@@ -341,7 +341,41 @@
 
 
 
-        }else {
+        }else if(this.currentSong.musicType=='qq'){
+          getQQLyric(this.currentSong.id).then((res) =>{
+            if(res.code==0){
+              let lyric =res.decodeLyric;
+              this.currentLyric = new Lyric(lyric, this.handleLyric)
+              if (this.playing) {
+                this.currentLyric.play()
+              }
+            }
+          }).catch(() => {
+            this.currentLyric = null
+            this.playingLyric = ''
+            this.currentLineNum = 0
+          })
+
+        }
+        else if(this.currentSong.musicType=='kugou') {
+          getKugouLyric(this.currentSong.hash).then((res) => {
+            if(res.errcode==0){
+              let lyric=res.data.lrc;
+              // if (this.currentSong.lyric !== lyric) {
+              //   return
+              // }
+              this.currentLyric = new Lyric(lyric, this.handleLyric)
+              if (this.playing) {
+                this.currentLyric.play()
+              }
+            }
+          }).catch(() => {
+            this.currentLyric = null
+            this.playingLyric = ''
+            this.currentLineNum = 0
+          })
+        }
+        else {
           getLyric(this.currentSong.id).then((res) => {
             if(res.code==config.apiConfig.request_ok){
               let lyric=res.lrc.lyric
@@ -360,8 +394,10 @@
           })
         }
 
+
       },
       handleLyric({lineNum, txt}) {
+
         this.currentLineNum = lineNum
         if (lineNum > 5) {
           let lineEl = this.$refs.lyricLine[lineNum - 5]
@@ -527,6 +563,8 @@
         clearTimeout(this.timer)
         const audio = this.$refs.audio
         this.timer = setTimeout(() => {
+          //计算音乐时长
+          this.currentSong.dt=audio.duration;
           audio.play()
           this._getLyric()
         }, 1000)

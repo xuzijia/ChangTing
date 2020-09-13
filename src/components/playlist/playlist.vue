@@ -86,7 +86,7 @@
         this.$refs.scroll.refresh()
       },
       _getPlayList (flag) {
-        console.log(this.loadFlag)
+
         getPList(this.listData.cat, this.listData.page * this.listData.size, this.listData.size).then((res) => {
           if (res.code == config.apiConfig.request_ok) {
             if (flag) {
@@ -123,7 +123,7 @@
           getCatList().then((res) => {
             if (res.code == config.apiConfig.request_ok) {
               this.catList = res
-              console.log(res)
+
             }
           })
         }

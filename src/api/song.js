@@ -68,3 +68,26 @@ export function getKugouMusic (hash) {
   }
   return fetch(url,data);
 }
+
+/**
+ * 获取qq音乐歌词
+ * @param id
+ * @returns {*}
+ */
+export function getQQLyric(id){
+  const  url="qq/getLyric";
+  const data ={
+    musicId: id
+  }
+  return fetch(url,data);
+
+
+}
+
+export function getKugouLyric(hash){
+  const url="kugou/getLyric"
+  const data={
+    musicHash: hash
+  }
+  return fetch(url,data);
+}

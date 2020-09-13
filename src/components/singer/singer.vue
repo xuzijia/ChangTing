@@ -41,7 +41,7 @@
       _getSingerList () {
         getHotSinger().then((res) => {
           if (res.code === config.apiConfig.request_ok) {
-            // console.log(res);
+            //
             this.singers = res.artists
           }
         })

@@ -10,7 +10,7 @@ import VueLazyload from 'vue-lazyload'
 import 'common/icon/iconfont.css' /*引入图标文件*/
 import {readCookie} from 'base/utils/musicUtils'
 // axios.defaults.baseURL = 'http://91cloud.top';
-axios.defaults.baseURL = 'http://10.107.0.20:3001';
+axios.defaults.baseURL = 'http://127.0.0.1:3001';
 // axios.defaults.baseURL = 'http://popps.top:7003/api';
 //开启cookie
 axios.defaults.withCredentials=true
@@ -25,12 +25,12 @@ Vue.use(VueLazyload, {
 
 // 全局拦截器 控制/user的接口 如果没有登录 跳转到登录页
 axios.interceptors.request.use((config) => {
-  console.log(config.url.indexOf("/user"));
-  console.log(config.url);
+
+
   if(config.url.indexOf("/user")!=-1){
     //判断登录状态
     if(readCookie("userid")==""){
-      console.log(config.url+":未登录")
+
       //显示登录页面
       store.commit("SET_LOGIN_STATUS",true)
       return

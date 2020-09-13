@@ -43,7 +43,7 @@
         }
         getPlayList(this.disc.id).then((res) => {
           if (res.code === config.apiConfig.request_ok) {
-            console.log(res);
+
             this.songs = this._normalizeSongs(res.playlist.tracks)
           }
         })

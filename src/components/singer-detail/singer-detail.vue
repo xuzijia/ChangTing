@@ -49,7 +49,7 @@
         //获取歌手专辑
         getSingerAlbum(id).then((res)=>{
           if(res.code==config.apiConfig.request_ok){
-            console.log(res);
+
           }
         })
       },
@@ -57,7 +57,7 @@
         //获取歌手mv
         getSingerMv(id).then((res)=>{
           if(res.code==config.apiConfig.request_ok){
-            console.log(res);
+
           }
         })
       }

@@ -102,7 +102,7 @@
     },
     computed: {
       getData() {
-        console.log(this.type)
+
         if (this.type == SINGER) {
           return this.singers
         } else if (this.type == PLAYLIST) {
@@ -159,7 +159,7 @@
                 this.result = this._genResult(res.result)
                 this._checkMore(res.result)
               } else if (this.type == SINGER) {
-                console.log(res.result.artists)
+
                 this.singers = res.result.artists == undefined ? [] : res.result.artists
                 if (res.result.artists == undefined) {
                   this.hasMore = false
@@ -182,7 +182,7 @@
           }else if(this.musicType=='kugou'){
             if(res.errcode==0){
               this.result = this.result.concat(this.getkugouResult(res.data))
-              console.log(this.result)
+
             }
           }
 

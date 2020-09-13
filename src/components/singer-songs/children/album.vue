@@ -62,7 +62,7 @@
         getSingerAlbum(id).then((res) => {
           if (res.code == config.apiConfig.request_ok) {
             this.albums=res.hotAlbums;
-            console.log(res);
+
           }
         })
       },

@@ -47,7 +47,7 @@
       _normalizeSongs(list) {
         let ret = []
         list.forEach((musicData) => {
-          console.log(musicData);
+
           if (musicData.id) {
             ret.push(createSongV2(musicData))
           }

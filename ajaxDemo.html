@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<form class="form-horizontal" role="form" style="margin-top: 50px">
+  <div class="form-group">
+    <label for="url" class="col-sm-2 control-label">接口地址:</label>
+    <div class="col-sm-7">
+      <input type="text" class="form-control" id="url"
+             placeholder="接口地址"> <button type="button" id="button" class="btn btn-default" style="margin-top: 15px">获取数据</button>
+    </div>
+
+
+  </div>
+
+
+</form>
+<div style="text-align: center">
+
+  <pre>
+    <code id="result"></code>
+</pre>
+
+</div>
+
+
+</body>
+
+<script>
+  $(function(){
+    $("button").click(function() {
+      if ($("#url").val()) {
+        $.get($("#url").val(), function (result) {
+          //result 就是后端返回的数据。 自行解析数据 渲染页面数据。。。
+          $("#result").text(result);
+        });
+      } else {
+        alert("请输入接口地址")
+      }
+
+  })
+  });
+
+</script>
+
+</html>

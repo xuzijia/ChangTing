@@ -11,7 +11,7 @@
       </div>
       <div class="info">
         <h1 class="name">{{item.name}}</h1>
-        <p class="user">by: {{item.creator.nickname}}</p>
+        <p class="user">{{item.creator.nickname}}</p>
         <p class="disc">
           <span v-if="item.tags">{{item.tags[0]}}</span>
           {{item.description==null?"暂无简介":item.description}}
