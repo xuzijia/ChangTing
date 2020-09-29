@@ -102,6 +102,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  // import 'view-design/dist/styles/iview.css';
   import {mapGetters, mapMutations, mapActions} from 'vuex'
   import animations from 'create-keyframe-animation'
   import {prefixStyle} from 'common/js/dom'
@@ -280,20 +281,35 @@
 
         if(code==4){
           //发起请求
-          if(this.currentSong.musicType=='cloud' || this.currentSong.musicType=='qq' || this.currentSong.url.indexOf("163")!=-1){
+          if(this.currentSong.musicType=='cloud' || this.currentSong.url.indexOf("163")!=-1){
             let searchStr=this.currentSong.singer+" "+this.currentSong.name;
             getQQMusic(searchStr,this.currentSong.id,this.currentSong.musicType).then((res)=>{
               if(res.code==config.apiConfig.request_ok && res.url!=null){
                 this.currentSong.url=res.url;
               }else{
-                alert("暂时无版权,可以切换到其他平台看看哟")
-                this.songReady = true
+                this.$Message['error']({
+                  background: true,
+                  top:50,
+                  content: '音乐源播放失败，3秒后自动切换到下一首',
+                  duration: 3,
+                  closable: true
+                });
+                setTimeout(()=>{
+                  //3s后自动切换到下一首
+                  this.next();
+                },3000)
               }
             })
           }
 
         }else{
-          alert("网络出问题了吗？");
+          this.$Message['error']({
+            background: true,
+            top:50,
+            content: '没有发现网络',
+            duration: 3,
+            closable: true
+          });
           //code==2 没有网络
           this.songReady = true
         }
@@ -534,8 +550,17 @@
             if(res.code==config.apiConfig.request_ok && res.url!=null){
               this.currentSong.url=res.url;
             }else{
-              alert("充钱就能变得更强,可以切换到其他平台看看哟");
-              this.songReady = true
+              this.$Message['error']({
+                background: true,
+                top:50,
+                content: '无版权的歌曲或者收费的歌曲，3秒后自动切换到下一首',
+                duration: 3,
+                closable: true
+              });
+              setTimeout(()=>{
+                //3s后自动切换到下一首
+                this.next();
+              },3000)
             }
           })
         }else if(this.currentSong.musicType=='kugou'){
@@ -543,8 +568,18 @@
             if(res.url){
               this.currentSong.url=res.url;
             }else{
-              alert("充钱就能变得更强,可以切换到其他平台看看哟");
-              this.songReady = true
+
+              this.$Message['error']({
+                background: true,
+                top:50,
+                content: '无版权的歌曲或者收费的歌曲，3秒后自动切换到下一首',
+                duration: 3,
+                closable: true
+              });
+              setTimeout(()=>{
+                //3s后自动切换到下一首
+                this.next();
+              },3000)
             }
           })
         }

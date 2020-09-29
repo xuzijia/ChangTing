@@ -7,3 +7,29 @@ body, html
   -webkit-tap-highlight-color: transparent
   background: $color-background
   color: $color-text
+.ivu-message
+  font-size: 14px;
+  position: fixed;
+  z-index: 1010;
+  width: 100%;
+  top: 16px;
+  left: 0;
+  pointer-events: none;
+
+.ivu-message-notice
+  padding: 8px;
+  text-align: center;
+  transition: height .3s ease-in-out,padding .3s ease-in-out;
+.ivu-message-notice-with-background .ivu-message-notice-content-error
+  background: #ffefe6;
+  color: #ed3f13;
+  border: 1px solid #ffcfb8;
+
+.ivu-message-notice-content
+  display: inline-block;
+  pointer-events: all;
+  padding: 8px 16px;
+  border-radius: 4px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.2);
+  background: #fff;
+  position: relative;
