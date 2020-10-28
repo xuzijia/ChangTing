@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/npm/xgplayer@1.1.4/browser/index.js" charset="utf-8"></script>
+    <title>到点了，给我抑</title>
+
+
+  <style>
+    body{
+      padding: 15px;
+      background-color: WhiteSmoke;
+    }
+    .main{
+      margin-top: 30px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .item{
+      width: 15%;
+      margin: 20px 30px;
+    }
+    .item .user{
+      text-align: right;
+      color: 	DarkOrange;
+    }
+    .item .comment{
+      min-height: 200px;
+      text-indent: 2em;
+      line-height: 30px;
+      font-size: 14px;
+      color:#CC3333
+    }
+
+
+
+
+    .box-con{
+      width:200px;
+      height:200px;
+      position: fixed;
+      background: #FF6666;
+      top:-100px;
+      right:-100px;
+      transform: rotate(45deg);
+      cursor: pointer;
+    }
+    .box-con  span {
+      position: fixed;
+      bottom: 25px;
+      display: block;
+      width: 200px;
+      text-align: center;
+      transform: rotate(-45deg);
+      color: white;
+      /*font-weight: bold;*/
+      font-size: 16px;
+    }
+    .header{
+
+      text-align: center;
+      color: #CC3333;
+    }
+  </style>
+</head>
+
+
+
+<body>
+<div>
+  <h1 class="header">生而为人，我很抱歉~</h1>
+
+</div>
+  <div class="box-con">
+    <span>随机切换</span>
+  </div>
+
+<div class="main">
+
+
+
+
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">其实不想撞南墙，想撞先生的胸膛
+        其实不想见黄河，想你马上抱抱我
+        后来我明白，你要是也喜欢我，怎么会舍得让我撞南墙呢。[心碎]</p>
+      <p class="user">By : 木小雅 - 《可能否》 </p>
+    </div>
+  </div>
+  <div class="panel  panel-info item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">万般皆苦，唯有自渡。</p>
+      <p class="user">By : 阿冗 - 《你的答案》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">有些异性不能拿来做恋人，却也舍不得给别人。</p>
+      <p class="user">By : 周兴哲 - 《你，好不好？》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">在家楼下逛了两圈单曲循环这首歌，听完就把那段感情放弃了，我喜欢了快7年的人等了也快七年，重新再见后他说等他来找我，一个多月啦不想再等了，我放弃啦，我值得更爱我的呀[大笑]</p>
+      <p class="user">By : AGA - 《Wonderful U》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel  panel-info item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel  panel-info item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel  panel-info item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+
+
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel  panel-info item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel panel-danger item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+  <div class="panel  panel-success item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+  <div class="panel  panel-info item">
+    <div class="panel-heading">
+      <h3 class="panel-title">网易云热评</h3>
+    </div>
+    <div class="panel-body ">
+      <p class="comment">东野圭吾说：曾经拥有的东西失去了，并不代表就会回到原来没有那种东西的时候</p>
+      <p class="user">By : 张学友 - 《That Girl》 </p>
+    </div>
+  </div>
+
+
+
+  </div>
+
+</div>
+
+</body>
+</html>
