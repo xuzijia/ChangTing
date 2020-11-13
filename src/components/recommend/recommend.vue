@@ -56,22 +56,22 @@
 
 
         <!--新碟上架-->
-        <!--<div class="recommend-list hr" v-show="newlists.length">-->
-          <!--<router-link to="/singer">-->
-            <!--<h1 class="list-title"> 新碟上架 &gt;</h1>-->
-          <!--</router-link>-->
-          <!--&lt;!&ndash;新碟上架版面设计&ndash;&gt;-->
-          <!--<div class="new-album-list">-->
-              <!--<div class="item" v-for="(item,index) of newlists" :key="index" @click="selectItemByAlbum(item)">-->
-                <!--<div class="img">-->
-                  <!--<img v-lazy="item.picUrl+imgSize" width="100" height="100" >-->
-                <!--</div>-->
-                <!--<div class="album-name row-one" :title="item.name">{{item.name}}</div>-->
-                <!--<div class="album-singer">{{item.artist.name}}</div>-->
-              <!--</div>-->
-          <!--</div>-->
+        <div class="recommend-list hr" v-show="newlists.length">
+          <router-link to="/singer">
+            <h1 class="list-title"> 新碟上架 &gt;</h1>
+          </router-link>
+          <!--新碟上架版面设计-->
+          <div class="new-album-list">
+              <div class="item" v-for="(item,index) of newlists" :key="index" @click="selectItemByAlbum(item)">
+                <div class="img">
+                  <img v-lazy="item.picUrl+imgSize" width="100" height="100" >
+                </div>
+                <div class="album-name row-one" :title="item.name">{{item.name}}</div>
+                <div class="album-singer">{{item.artist.name}}</div>
+              </div>
+          </div>
 
-        <!--</div>-->
+        </div>
 
       </div>
       <div class="loading-container" v-show="!playlists.length">
