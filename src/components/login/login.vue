@@ -77,9 +77,9 @@
               //获取userid 保存到cookie
               if(res.account.id){
                 setCookie("userid",res.account.id);
-                setCookie("MUSIC_U",res.token)
               }
               //alert("登录成功！");
+              setCookie("MUSIC_U",res.token)
               this.back()
             }else if(res.code==config.apiConfig.login_error){
               alert("账号不存在！");
