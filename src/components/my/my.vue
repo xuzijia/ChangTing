@@ -129,7 +129,6 @@
       },
       //获取用户歌单信息
       _getMyPlayList () {
-        alert(this.login)
         //获取用户cookie
         if (this.login) {
           getMyPlayList(readCookie('userid')).then((res) => {
