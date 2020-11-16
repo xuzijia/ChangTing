@@ -77,6 +77,7 @@
               //获取userid 保存到cookie
               if(res.account.id){
                 setCookie("userid",res.account.id);
+                setCookie("MUSIC_U",res.token)
               }
               //alert("登录成功！");
               this.back()
