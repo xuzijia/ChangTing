@@ -24,13 +24,18 @@
         </scroll>
 
         <scroll ref="playList" class="list-scroll" v-if="currentIndex===2" :data="cloudSongList">
-          <div class="list-inner">
+          <loading title="正在加载网盘歌曲...." v-show="hasMore"></loading>
+          <div class="list-inner" v-if="!hasMore">
+            <div style="color:rgba(255, 255, 255, 0.5);text-align: center;font-size: 12px">
+              <span style="padding-right: 15px">总共 : {{cloudData.count}} 首</span>
+              <span>云盘容量 ：{{(cloudData.size/1024/1024/1024).toFixed(1) }}G / {{(cloudData.maxSize/1024/1024/1024).toFixed(1) }}G</span>
+            </div>
             <song-list :songs="cloudSongList" @select="selectSong"></song-list>
           </div>
         </scroll>
 
       </div>
-      <div class="no-result-wrapper" v-show="noResult">
+      <div class="no-result-wrapper" v-show="noResult && !hasMore">
         <no-result :title="noResultDesc"></no-result>
       </div>
     </div>
@@ -42,15 +47,23 @@
   import Scroll from 'base/scroll/scroll'
   import SongList from 'base/song-list/song-list'
   import NoResult from 'base/no-result/no-result'
-  import {mapGetters, mapActions} from 'vuex'
+  import {mapGetters, mapMutations, mapActions} from 'vuex'
   import {playlistMixin} from 'common/js/mixin'
-  import {getCloudSong} from 'api/my'
+  import {getCloudSongList} from 'api/my'
   import {config} from 'api/config'
+  import {createCloudSong} from 'common/js/song'
+  import Loading from 'base/loading/loading'
   export default {
     mixins: [playlistMixin],
     data() {
       return {
-        cloudSong: [],
+        cloudSongList: [],
+        cloudData:{
+          count:0,
+          size: 0,
+          maxSize: 0
+        },
+        hasMore: true,
         currentIndex: parseInt(this.$route.params.flag),
         switches: [
           {
@@ -70,24 +83,45 @@
           return !this.favoriteList.length
         } else if (this.currentIndex === 1) {
           return !this.playHistory.length
+        }else if (this.currentIndex ===2) {
+          return !this.cloudSongList.length
         }
       },
       noResultDesc() {
+
         if (this.currentIndex === 0) {
           return '暂无收藏歌曲'
         } else if(this.currentIndex===1) {
           return '你还没有听过歌曲'
-        } else if(this.currentIndex===2) {
+        } else if(this.currentIndex===2 && this.hasMore==false) {
           return '网盘没有数据,你可以返回登录后查看'
         }
       },
       ...mapGetters([
         'favoriteList',
         'playHistory',
-        'cloudSongList'
+        'cloudCacheList'
       ])
     },
+    created() {
+      if(this.currentIndex===2){
+        //查询云盘歌曲
+        getCloudSongList().then((res) => {
+          if (res.code == config.apiConfig.request_ok) {
+            this.cloudData.count=res.count;
+            this.cloudData.size=res.size;
+            this.cloudData.maxSize=res.maxSize;
+            console.log(this.cloudData)
+            var cloudSongList=this._normalizeSongs(res.data);
+            this.cloudSongList = cloudSongList;
+            this.hasMore=false
+          }
+        })
 
+      }
+
+
+    },
     methods: {
       handlePlaylist(playlist) {
         const bottom = playlist.length > 0 ? '60px' : ''
@@ -95,8 +129,33 @@
         this.$refs.favoriteList && this.$refs.favoriteList.refresh()
         this.$refs.playList && this.$refs.playList.refresh()
       },
+      _normalizeSongs(list) {
+        let ret = []
+        list.forEach((musicData) => {
+          if (musicData.songId) {
+            ret.push(createCloudSong(musicData))
+          }
+        })
+        return ret
+      },
       switchItem(index) {
         this.currentIndex = index
+        if(this.currentIndex===2 && this.cloudSongList.length==0){
+          //查询云盘歌曲
+          getCloudSongList().then((res) => {
+            if (res.code == config.apiConfig.request_ok) {
+              this.cloudData.count=res.count;
+              this.cloudData.size=res.size;
+              this.cloudData.maxSize=res.maxSize;
+              console.log(this.cloudData)
+              var cloudSongList=this._normalizeSongs(res.data);
+              this.cloudSongList = cloudSongList;
+              this.hasMore=false
+            }
+          })
+
+        }
+
       },
       selectSong(song) {
         this.insertSong(song)
@@ -108,6 +167,9 @@
 
       random() {
         let list = this.currentIndex === 0 ? this.favoriteList : this.playHistory
+        if(this.currentIndex===2){
+           list =this.cloudSongList;
+        }
         if (list.length === 0) {
           return
         }
@@ -127,7 +189,8 @@
       Switches,
       Scroll,
       SongList,
-      NoResult
+      NoResult,
+      Loading
     }
   }
 </script>

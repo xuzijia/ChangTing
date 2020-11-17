@@ -37,7 +37,8 @@ export const playerMixin = {
       'playlist',
       'currentSong',
       'mode',
-      'favoriteList'
+      'favoriteList',
+      'cloudCacheList'
     ])
   },
   methods: {
@@ -83,6 +84,7 @@ export const playerMixin = {
       setPlaylist: 'SET_PLAYLIST',
       setCurrentIndex: 'SET_CURRENT_INDEX',
       setPlayingState: 'SET_PLAYING_STATE',
+      setCloudList:'SET_CLOUD_CACHE_LIST'
     }),
     ...mapActions([
       'saveFavoriteList',

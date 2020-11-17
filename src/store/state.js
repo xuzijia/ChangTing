@@ -15,7 +15,7 @@ const state = {
   searchHistory: loadSearch(),
   playHistory: loadPlay(),
   favoriteList: loadFavorite(),
-  cloudSongList: getCloudSongList(),
+  cloudCacheList: [],
   //登录状态
   loginStatus:false,
 }

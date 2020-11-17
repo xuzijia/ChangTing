@@ -33,3 +33,4 @@ export const playHistory = state => state.playHistory
 export const favoriteList = state => state.favoriteList
 
 
+export const cloudCacheList = state => state.cloudCacheList

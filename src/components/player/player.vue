@@ -281,6 +281,7 @@
 
         if(code==4){
           //发起请求
+          console.log(this.currentSong)
           if(this.currentSong.musicType=='cloud' || this.currentSong.url.indexOf("163")!=-1){
             let searchStr=this.currentSong.singer+" "+this.currentSong.name;
             getQQMusic(searchStr,this.currentSong.id,this.currentSong.musicType).then((res)=>{

@@ -40,10 +40,6 @@ export function getUserDetail (userid) {
  * @returns {*}
  */
 export function getCloudSongList() {
-  const url="/cloud/detail"
-  fetch(url).then((res) => {
-      if (res.code == config.apiConfig.request_ok) {
-        return res.data;
-      }
-    })
+  const url="/user/cloud?limit=99999&offset=0"
+  return fetch(url);
 }

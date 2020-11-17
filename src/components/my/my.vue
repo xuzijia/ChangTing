@@ -51,7 +51,7 @@
                 我的云盘
               </div>
               <div class="count" style="border-bottom: none">
-                0 >
+                  O^O
               </div>
             </div>
           </div>

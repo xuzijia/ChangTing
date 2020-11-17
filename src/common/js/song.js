@@ -31,6 +31,23 @@ export function getMusicUrl(musicId){
   })
 }
 
+export function createCloudSong(musicData){
+  return new Song({
+    id: musicData.songId,
+    singer: filterSinger(musicData.simpleSong.ar),
+    name: musicData.songName,
+    album: musicData.simpleSong  ? '':musicData.simpleSong.al.name ,
+    dt: musicData.simpleSong.dt,
+    image: musicData.simpleSong.al? musicData.simpleSong.al.picUrl:'',
+    url: "",
+    mv: '',
+    alias: '',
+    musicType:'cloud'
+  })
+
+
+}
+
 
 export function createSong(musicData) {
   return new Song({
@@ -137,7 +154,11 @@ function filterSinger(singer) {
     return ''
   }
   singer.forEach((s) => {
-    ret.push(s.name)
+    if(s.id==0){
+      ret.push("未知")
+    }else{
+      ret.push(s.name)
+    }
   })
   return ret.join('/')
 }

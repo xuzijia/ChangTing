@@ -3,7 +3,7 @@
 
     <ul>
       <li @click="selectItem(song, index)" class="item" v-for="(song, index) in songs">
-        <div class="sort" v-if="!rank && song.musicType==undefined">
+        <div class="sort" v-if="!rank && (song.musicType==undefined || song.musicType=='cloud')">
           <img width="18" height="18" style="border-radius: 18px" src="./cloudmusic.jpg">
         </div>
         <div class="sort" v-if="!rank && song.musicType=='migu'">
