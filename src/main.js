@@ -12,8 +12,8 @@ import {readCookie} from 'base/utils/musicUtils'
 
 import ViewUI from 'view-design';
 // axios.defaults.baseURL = 'http://91cloud.top';
-axios.defaults.baseURL = 'http://127.0.0.1:3001';
-// axios.defaults.baseURL = 'http://popps.top:7003/api';
+// axios.defaults.baseURL = 'http://127.0.0.1:3001';
+axios.defaults.baseURL = 'http://popps.top:7003/api';
 //开启cookie
 axios.defaults.withCredentials=true
 
