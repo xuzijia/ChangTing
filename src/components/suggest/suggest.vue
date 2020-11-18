@@ -151,42 +151,46 @@
         this.page = 0
         this.hasMore = true
         this.$refs.suggest.scrollTo(0, 0)
-        search(this.query, this.type, this.musicType, this.page * perpage, perpage).then((res) => {
-          if(this.musicType=='cloud'){
-            if (res.code === config.apiConfig.request_ok) {
-              //根据不同的搜索类型 解析数据
-              if (this.type == SONG) {
-                this.result = this._genResult(res.result)
-                this._checkMore(res.result)
-              } else if (this.type == SINGER) {
+        if(this.query){
+          search(this.query, this.type, this.musicType, this.page * perpage, perpage).then((res) => {
+            if(this.musicType=='cloud'){
+              if (res.code === config.apiConfig.request_ok) {
+                //根据不同的搜索类型 解析数据
+                if (this.type == SONG) {
+                  this.result = this._genResult(res.result)
+                  this._checkMore(res.result)
+                } else if (this.type == SINGER) {
 
-                this.singers = res.result.artists == undefined ? [] : res.result.artists
-                if (res.result.artists == undefined) {
-                  this.hasMore = false
-                } else {
-                  this._checkMoreForSinger(res.result)
+                  this.singers = res.result.artists == undefined ? [] : res.result.artists
+                  if (res.result.artists == undefined) {
+                    this.hasMore = false
+                  } else {
+                    this._checkMoreForSinger(res.result)
+                  }
+                } else if (this.type == PLAYLIST) {
+                  this.playList = res.result.playlists
+                  this._checkMoreForPlayList(res.result)
                 }
-              } else if (this.type == PLAYLIST) {
-                this.playList = res.result.playlists
-                this._checkMoreForPlayList(res.result)
+              }
+            }else if(this.musicType=='migu'){
+              if(res.success==true){
+                this.result=this.result.concat(this.getMiguResult(res.musics));
+              }
+            } else if(this.musicType=='qq'){
+              if(res.code==0){
+                this.result = this.result.concat(this.getqqResult(res.data))
+              }
+            }else if(this.musicType=='kugou'){
+              if(res.errcode==0){
+                this.result = this.result.concat(this.getkugouResult(res.data))
+
               }
             }
-          }else if(this.musicType=='migu'){
-            if(res.success==true){
-              this.result=this.result.concat(this.getMiguResult(res.musics));
-            }
-          } else if(this.musicType=='qq'){
-            if(res.code==0){
-              this.result = this.result.concat(this.getqqResult(res.data))
-            }
-          }else if(this.musicType=='kugou'){
-            if(res.errcode==0){
-              this.result = this.result.concat(this.getkugouResult(res.data))
 
-            }
-          }
+          })
 
-        })
+
+        }
       },
       //下拉加载更多
       searchMore() {

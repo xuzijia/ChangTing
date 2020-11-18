@@ -122,6 +122,7 @@
     mixins: [playerMixin],
     data() {
       return {
+        dtFlag:false,
         songReady: false,
         currentTime: 0,
         radius: 32,
@@ -161,6 +162,18 @@
 
     },
     methods: {
+      setMusicDt(){
+        if(!this.dtFlag){
+          const audio = this.$refs.audio
+          this.timer = setTimeout(() => {
+            //计算音乐时长
+            this.currentSong.dt=audio.duration;
+            audio.play()
+            this._getLyric()
+            this.dtFlag=true;
+          }, 1)
+        }
+      },
       back() {
         this.setFullScreen(false)
       },
@@ -270,23 +283,22 @@
         this.songReady = false
       },
       ready() {
-
+        this.dtFlag=false;
         this.songReady = true
         this.savePlayHistory(this.currentSong)
+        this.setMusicDt()
       },
       error(e) {
         var code=e.target.error.code
         //code==4 说明该歌曲没有版权
-
-
         if(code==4){
           //发起请求
-          console.log(this.currentSong)
           if(this.currentSong.musicType=='cloud' || this.currentSong.url.indexOf("163")!=-1){
             let searchStr=this.currentSong.singer+" "+this.currentSong.name;
             getQQMusic(searchStr,this.currentSong.id,this.currentSong.musicType).then((res)=>{
               if(res.code==config.apiConfig.request_ok && res.url!=null){
                 this.currentSong.url=res.url;
+
               }else{
                 this.$Message['error']({
                   background: true,
@@ -319,7 +331,6 @@
         this.currentTime = e.target.currentTime
       },
       format(interval) {
-
           interval = interval | 0
           const minute = interval / 60 | 0
           const second = this._pad(interval % 60)
@@ -597,14 +608,11 @@
           newSong.dt*=1000;
         }
         clearTimeout(this.timer)
-        const audio = this.$refs.audio
-        this.timer = setTimeout(() => {
-          //计算音乐时长
-          this.currentSong.dt=audio.duration;
-          audio.play()
-          this._getLyric()
-        }, 1000)
       },
+
+
+
+
       playing(newPlaying) {
         console.log(newPlaying)
         const audio = this.$refs.audio

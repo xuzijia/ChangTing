@@ -80,7 +80,16 @@
               }
               //alert("登录成功！");
               setCookie("MUSIC_U",res.token)
+              this.$Message['error']({
+                background: true,
+                top:80,
+                content: '网易云账号登录成功...',
+                duration: 1,
+                closable: true
+              });
+
               this.back()
+
             }else if(res.code==config.apiConfig.login_error){
               alert("账号不存在！");
             }else if(res.code==config.apiConfig.password_error){
