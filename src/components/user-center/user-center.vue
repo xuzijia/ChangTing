@@ -11,6 +11,10 @@
         <i class="icon-play"></i>
         <span class="text">随机播放全部</span>
       </div>
+      <div style="color:rgba(255, 255, 255, 0.5);text-align: center;font-size: 12px;padding-top: 10px" v-if="!hasMore && currentIndex===2">
+        <span style="padding-right: 15px">总共 : {{cloudData.count}} 首</span>
+        <span>云盘容量 ：{{(cloudData.size/1024/1024/1024).toFixed(1) }}G / {{(cloudData.maxSize/1024/1024/1024).toFixed(1) }}G</span>
+      </div>
       <div class="list-wrapper" ref="listWrapper">
         <scroll ref="favoriteList" class="list-scroll" v-if="currentIndex===0" :data="favoriteList">
           <div class="list-inner">
@@ -23,13 +27,8 @@
           </div>
         </scroll>
 
-        <scroll ref="playList" class="list-scroll" v-if="currentIndex===2" :data="cloudSongList">
-          <loading title="正在加载网盘歌曲...." v-show="hasMore"></loading>
-          <div class="list-inner" v-if="!hasMore">
-            <div style="color:rgba(255, 255, 255, 0.5);text-align: center;font-size: 12px">
-              <span style="padding-right: 15px">总共 : {{cloudData.count}} 首</span>
-              <span>云盘容量 ：{{(cloudData.size/1024/1024/1024).toFixed(1) }}G / {{(cloudData.maxSize/1024/1024/1024).toFixed(1) }}G</span>
-            </div>
+        <scroll ref="cloudSongList" class="list-scroll" v-if="currentIndex===2" :data="cloudSongList" >
+          <div class="list-inner" >
             <song-list :songs="cloudSongList" @select="selectSong"></song-list>
           </div>
         </scroll>
@@ -38,6 +37,9 @@
       <div class="no-result-wrapper" v-show="noResult && !hasMore">
         <no-result :title="noResultDesc"></no-result>
       </div>
+
+      <loading title="正在加载网盘歌曲...." v-show="hasMore && currentIndex===2"></loading>
+
     </div>
   </transition>
 </template>
@@ -57,6 +59,8 @@
     mixins: [playlistMixin],
     data() {
       return {
+        pullup: true,
+        beforeScroll: true,
         cloudSongList: [],
         cloudData:{
           count:0,
@@ -125,9 +129,12 @@
     methods: {
       handlePlaylist(playlist) {
         const bottom = playlist.length > 0 ? '60px' : ''
+        this.$refs.listWrapper.style.top = '130px'
         this.$refs.listWrapper.style.bottom = bottom
         this.$refs.favoriteList && this.$refs.favoriteList.refresh()
         this.$refs.playList && this.$refs.playList.refresh()
+        this.$refs.cloudSongList && this.$refs.cloudSongList.refresh()
+
       },
       _normalizeSongs(list) {
         let ret = []
@@ -147,7 +154,6 @@
               this.cloudData.count=res.count;
               this.cloudData.size=res.size;
               this.cloudData.maxSize=res.maxSize;
-              console.log(this.cloudData)
               var cloudSongList=this._normalizeSongs(res.data);
               this.cloudSongList = cloudSongList;
               this.hasMore=false
