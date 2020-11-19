@@ -11,6 +11,9 @@ const FAVORITE_MAX_LEN = 200
 
 const TOKEN="MUSIC_U"
 
+const USERID='USER_ID'
+
+
 function insertArray(arr, val, compare, maxLen) {
   const index = arr.findIndex(compare)
   if (index === 0) {
@@ -93,4 +96,19 @@ export function deleteFavorite(song) {
 export function loadFavorite() {
   return storage.get(FAVORITE_KEY, [])
 }
+export function getLocalToken() {
+  return storage.get(TOKEN)
+}
+export function getLocalUserId(){
+  return storage.get(USERID)
+}
 
+export function setLocalToken(token){
+  storage.set(TOKEN, token)
+}
+export function setLocalUserId(userId){
+  storage.set(USERID, userId)
+}
+export function deleteLocalToken(){
+  storage.remove(TOKEN)
+}

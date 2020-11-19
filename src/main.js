@@ -8,8 +8,7 @@ import axios from 'axios'
 import store from './store'
 import VueLazyload from 'vue-lazyload'
 import 'common/icon/iconfont.css' /*引入图标文件*/
-import {readCookie} from 'base/utils/musicUtils'
-
+import {getLocalToken} from 'common/js/cache'
 import ViewUI from 'view-design';
 // axios.defaults.baseURL = 'http://91cloud.top';
 // axios.defaults.baseURL = 'http://127.0.0.1:3001';
@@ -33,7 +32,7 @@ axios.interceptors.request.use((config) => {
 
   if(config.url.indexOf("/user")!=-1){
     //判断登录状态
-    if(readCookie("userid")==""){
+    if(getLocalToken()==undefined){
 
       //显示登录页面
       store.commit("SET_LOGIN_STATUS",true)

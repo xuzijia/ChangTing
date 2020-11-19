@@ -3,7 +3,7 @@
  * @author simple
  * @date 2018/11/22 17:33
  */
-
+import {getLocalToken} from 'common/js/cache'
 /**
  * 时间戳转日期格式
  * @param time 时间戳
@@ -102,9 +102,11 @@ export function deleteCookie(cookieName){
 }
 
 export function getLoginStatus () {
-  if(readCookie("MUSIC_U")!=""){
+  if(getLocalToken()!=undefined){
     return true
   }else{
     return false
   }
 }
+
+

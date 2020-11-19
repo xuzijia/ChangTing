@@ -102,12 +102,12 @@
 <script>
   import Loading from 'base/loading/loading'
   import Scroll from 'base/scroll/scroll'
-  import {setCookie, readCookie, deleteCookie,getLoginStatus} from 'base/utils/musicUtils'
+  import {getLoginStatus} from 'base/utils/musicUtils'
   import {getMyPlayList} from 'api/my'
   import {config} from 'api/config'
   import {mapMutations,mapGetters} from 'vuex'
   import {playHistory} from '../../store/getters'
-
+  import {getLocalUserId} from 'common/js/cache'
   export default {
     data () {
       return {
@@ -131,11 +131,12 @@
       _getMyPlayList () {
         //获取用户cookie
         if (this.login) {
-          getMyPlayList(readCookie('userid')).then((res) => {
+          let userId=getLocalUserId();
+          getMyPlayList(userId).then((res) => {
             if (res.code == config.apiConfig.request_ok) {
               //过滤出我的歌单和收藏的歌单
               if (res.playlist.length > 0) {
-                this.filterList(res.playlist, readCookie('userid'))
+                this.filterList(res.playlist, userId)
                 this.playlist = res.playlist
               }
             }

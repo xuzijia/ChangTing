@@ -36,7 +36,7 @@
   import {config} from 'api/config'
   import Loading from 'base/loading/loading'
   import {getDayRecommend} from 'api/recommend'
-  import {setCookie,readCookie,deleteCookie} from 'base/utils/musicUtils'
+  import {setLocalToken,setLocalUserId} from 'common/js/cache'
 
   export default {
     name: 'login',
@@ -66,20 +66,14 @@
       },
       //登录
       login(){
-        //重置用户登录状态 删掉登录cookie
-        deleteCookie("MUSIC_U");
-        deleteCookie("userid");
         if(this.account!="" && this.password!=""){
           this.logging=true;
           //todo 校验账号类型 正则校验该账号是手机号码还是邮箱
           login(this.account,this.password).then((res)=>{
             if(res.code==config.apiConfig.request_ok){
-              //获取userid 保存到cookie
-              if(res.account.id){
-                setCookie("userid",res.account.id);
-              }
-              //alert("登录成功！");
-              setCookie("MUSIC_U",res.token)
+              //set token to local storage
+              setLocalToken(res.token);
+              setLocalUserId(res.account.id);
               this.$Message['error']({
                 background: true,
                 top:80,

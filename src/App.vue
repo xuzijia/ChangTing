@@ -15,7 +15,6 @@
   import TopTab from 'components/tab/tab'
   import Player from 'components/player/player'
   import Login from 'components/login/login'
-  import {readCookie} from 'base/utils/musicUtils'
   import {mapGetters, mapMutations} from 'vuex'
   export default {
     name: 'App',
