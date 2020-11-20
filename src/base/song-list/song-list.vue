@@ -28,7 +28,7 @@
 
           <p class="desc">{{getDesc(song)}}</p>
         </div>
-        <div class="song-cz" v-if="song.mv!=0 && song.mv" @click.stop="playMv(song.mv)">
+        <div class="song-cz" v-if="song.mv!=0 && song.mv" @click.stop="playMv(song.mv,song.musicType)">
           <i class="icon iconfont icon-video"></i>
         </div>
       </li>
@@ -68,9 +68,9 @@
         }
       },
       //播放mv
-      playMv(id){
+      playMv(id,musicType){
         this.$router.push({
-          path:`/mv/player/${id}`
+          path:`/mv/player/${id}/${musicType}`
         })
       },
     }

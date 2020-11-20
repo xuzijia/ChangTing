@@ -123,7 +123,7 @@ export function createQQData(musicData) {
     url: `http://www.baidu.com`,
     dt: 0,
     alias: [],
-    mv: "",
+    mv: musicData.vid,
     musicType: 'qq',
     hash: '',
     copyrightId: ''

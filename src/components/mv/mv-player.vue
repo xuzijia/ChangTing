@@ -22,16 +22,16 @@
             <h1 class="title">{{mvData.name}}
             </h1>
 
-            <p class="singer">
+            <p class="singer" v-show="musicType!='qq'">
               <i class="icon iconfont icon-user " style="font-size: 20px"></i>&nbsp;&nbsp;{{mvData.artistName}}
             </p>
-            <p class="ptime">
+            <p class="ptime" v-show="musicType!='qq'">
               <span class="t">发布：{{mvData.publishTime}}</span>
               <span>播放: {{formatNumber(mvData.playCount)}}</span>
             </p>
 
             <!--mv数据-->
-            <div class="mvdata" v-show="mvData.likeCount">
+            <div class="mvdata" v-show="mvData.likeCount && musicType!='qq'">
               <div class="item">
                 <i class="icon iconfont icon-dianzan"></i>
                 <p>{{mvData.likeCount}}</p>
@@ -89,6 +89,7 @@
         show: true,
         mvid: 0,
         mvData: {},
+        musicType:'',
         currMvUrl: '',
         playerOptions: {
           playbackRates: [0.75, 1.0, 1.5, 2.0],
@@ -135,7 +136,11 @@
 
       this.mvid = this.$route.params.id
       //获取mv信息
-      this._getMvInfo()
+      if(this.$route.params.musicType=='qq'){
+        this._getQqMvInfo();
+      }else{
+        this._getMvInfo()
+      }
     },
     methods: {
       back () {
@@ -165,6 +170,46 @@
             }
           })
         }
+      },
+
+      _getQqMvInfo(){
+        if(this.mvid!=0){
+          getMvInfo(this.mvid,this.$route.params.musicType).then(res =>{
+              if(res.code==0){
+                let source=res.getMVUrl.data[this.mvid].mp4;
+                if(this.currMvUrl=source[source.length-1].freeflow_url.length!=0){
+                  this.currMvUrl=this.currMvUrl=source[source.length-1].freeflow_url[0];
+                }else if(this.currMvUrl=source[source.length-2].freeflow_url.length!=0){
+                  this.currMvUrl=this.currMvUrl=source[source.length-2].freeflow_url[0];
+                }else if(this.currMvUrl=source[source.length-3].freeflow_url.length!=0){
+                  this.currMvUrl=this.currMvUrl=source[source.length-3].freeflow_url[0];
+                }else if(this.currMvUrl=source[source.length-4].freeflow_url.length!=0){
+                  this.currMvUrl=this.currMvUrl=source[source.length-4].freeflow_url[0];
+                }else if(this.currMvUrl=source[source.length-5].freeflow_url.length!=0){
+                  this.currMvUrl=this.currMvUrl=source[source.length-5].freeflow_url[0];
+                }
+
+
+
+                this.mvData.cover=res.getMVInfo.data[this.mvid].cover_pic;
+                this.musicType='qq';
+                this.mvData.name=res.getMVInfo.data[this.mvid].name
+                this.playerOptions = Object.assign({}, this.playerOptions, {
+
+                  sources: [{
+                    type: 'video/mp4',
+                    src: this.currMvUrl
+                  }],
+
+                })
+
+              }else{
+                alert("找不到mv信息！");
+                this.$router.back();
+              }
+          })
+        }
+
       },
 
       formatNumber (num) {

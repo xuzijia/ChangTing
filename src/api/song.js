@@ -34,12 +34,21 @@ export function getMiguInfo(id){
  * @param id
  * @returns mv详细信息
  */
-export function getMvInfo (id) {
-  const url="/mv/detail";
-  const data={
-    id:id,
+export function getMvInfo (id,musicType) {
+  if(musicType=='qq'){
+    const url ="/qq/getMvUrl";
+    const data ={
+      vid: id
+    };
+    return fetch(url,data);
+  }else{
+    const url="/mv/detail";
+    const data={
+      id:id,
+    }
+    return fetch(url,data);
   }
-  return fetch(url,data);
+
 }
 
 /**

@@ -96,7 +96,7 @@ export default new Router({
     },
 
     {
-      path: '/mv/player/:id',
+      path: '/mv/player/:id/:musicType',
       component: MvPlayer
     },
     {
