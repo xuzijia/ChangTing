@@ -21,7 +21,8 @@ axios.defaults.withCredentials=true
 Vue.config.productionTip = false;
 //图片懒加载
 Vue.use(VueLazyload, {
-  loading: require('common/image/default.png')
+  // loading: require('common/image/default.png')
+  loading: require('common/image/dongtai.gif')
 })
 
 Vue.use(ViewUI);
