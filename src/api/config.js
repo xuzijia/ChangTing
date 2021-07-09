@@ -16,5 +16,6 @@ export const config = {
     sequence: 0,
     loop: 1,
     random: 2
-  }
+  },
+  downUrl:'http://popps.top:7003/api'
 }

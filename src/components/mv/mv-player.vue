@@ -22,6 +22,15 @@
             <h1 class="title">{{mvData.name}}
             </h1>
 
+
+            <!--mv数据-->
+            <div class="mvdata">
+              <a class="item" style="color: #0086b3" :href="downUrl">
+                <i class="icon iconfont icon-xiazai"></i>
+                <p>立即下载</p>
+              </a>
+            </div>
+
             <p class="singer" v-show="musicType!='qq'">
               <i class="icon iconfont icon-user " style="font-size: 20px"></i>&nbsp;&nbsp;{{mvData.artistName}}
             </p>
@@ -44,7 +53,7 @@
                 <i class="icon iconfont icon-pinglun"></i>
                 <p>{{mvData.commentCount}}</p>
               </div>
-              <a class="item" style="color: #0086b3" :href="currMvUrl" download="1.mp4">
+              <a class="item" style="color: #0086b3" :href="downUrl">
                 <i class="icon iconfont icon-xiazai"></i>
                 <p>立即下载</p>
               </a>
@@ -91,6 +100,7 @@
         mvData: {},
         musicType:'',
         currMvUrl: '',
+        downUrl:'',
         playerOptions: {
           playbackRates: [0.75, 1.0, 1.5, 2.0],
           autoplay: false, //如果true,浏览器准备好时开始回放。
@@ -194,6 +204,8 @@
                 this.mvData.cover=res.getMVInfo.data[this.mvid].cover_pic;
                 this.musicType='qq';
                 this.mvData.name=res.getMVInfo.data[this.mvid].name
+
+                this.downUrl = config.downUrl+'/down/qq/mv/?url='+this.currMvUrl+"&name="+this.mvData.name;
                 this.playerOptions = Object.assign({}, this.playerOptions, {
 
                   sources: [{
